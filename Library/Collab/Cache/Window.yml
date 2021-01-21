@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
+    - Assets/Scripts/Player/PlayerController.cs
+    - ProjectSettings/UnityConnectSettings.asset
     - 
-    m_Values: 01
-  RevisionSummary: '* Fixed obstacles being invisible'
+    m_Values: 010101
+  RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 
   HistoryPageNumber: 0
-  TabIndex: 1
+  TabIndex: 0

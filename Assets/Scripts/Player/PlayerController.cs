@@ -140,7 +140,7 @@ namespace Player
                     print($"Obstacle : {collision.gameObject.name} in {collision.transform.parent.parent.gameObject.name}");
                     Destroy(gameObject);
                     print("Gameover");
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                     break;
                 case "BottomWall":
                     print($"Bottom Wall : {collision.gameObject.name}");
