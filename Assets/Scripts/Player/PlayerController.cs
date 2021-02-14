@@ -52,6 +52,8 @@ namespace Player
             animator = GetComponent<Animator>();
 
             currentSpeed = startingSpeed * speedMultipiler;
+
+            //ScoreManagerScript.instance.displayScore(5);
         }
 
         // Update is called once per frame
@@ -145,6 +147,11 @@ namespace Player
                 case "BottomWall":
                     print($"Bottom Wall : {collision.gameObject.name}");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    break;
+                case "Collectables":
+                    print("Hit Collectables !");
+                    ScoreManagerScript.instance.displayScore(1);
+                    collision.gameObject.SetActive(false);
                     break;
             }
         }

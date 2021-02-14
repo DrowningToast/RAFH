@@ -58,6 +58,12 @@ namespace level {
                 tilemapRenderer = GetComponent<TilemapRenderer>();
                 tilemapCollider2D = GetComponent<TilemapCollider2D>();
             }
+
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+
             // isFirstGrid ในกรณีที่เป็นตัวแรกจะไม่ทำการตั้ง offset เผื่อ tilemap 
             transform.parent.position = isFirstGrid ? new Vector2(0, 0) : new Vector2(25, 0);
             // Enable all components
@@ -67,6 +73,12 @@ namespace level {
         }
         public void disableTileSet()
         {
+
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
             // Disable all components
             tilemap.enabled = false;
             tilemapRenderer.enabled = false;
