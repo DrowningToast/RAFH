@@ -7,10 +7,21 @@ public class mainmenu : MonoBehaviour
 {
     public void start()
     {
+        StartCoroutine("TimedStart");
+    }
+
+    IEnumerator TimedStart()
+    {
+
+        yield return new WaitForSeconds(1.5f);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     public void quit()
     {
+        
         Application.Quit();
     }
+    
 }

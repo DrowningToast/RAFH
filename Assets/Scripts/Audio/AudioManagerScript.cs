@@ -3,13 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 public class AudioManagerScript : MonoBehaviour
 {
+
+    public static AudioManagerScript instance;
 
     [SerializeField] AudioData[] AudioSet = new AudioData[0];
 
     private void Awake()
     {
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         foreach(AudioData audio in AudioSet)
         {
             audio.audioSource = gameObject.AddComponent<AudioSource>();
@@ -24,12 +37,18 @@ public class AudioManagerScript : MonoBehaviour
 
     public void Start()
     {
-        
+        foreach(AudioData audio in AudioSet)
+        {
+            if (audio.audioSource.playOnAwake)
+            {
+                play(audio.id);
+            }
+        }
     }
 
     public void play(string id)
     {
-        print("PLAY SOMETHING GODDAMNIT");
+        print($"Playing Audio {id}");
         AudioData data =  Array.Find(AudioSet, audioData => audioData.id == id);
         data.audioSource.Play();
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class GameManagerScript : MonoBehaviour
@@ -55,8 +56,12 @@ public class GameManagerScript : MonoBehaviour
         Time.timeScale = 1;
         pausePanel?.SetActive(false);
     }
-    public void quit()
+    public void mainmenu()
     {
-        Application.Quit();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+    public void retry()
+    {
+        SceneManager.LoadScene("Gameplay");
     }
 }

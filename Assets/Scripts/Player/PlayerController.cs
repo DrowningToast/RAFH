@@ -22,6 +22,7 @@ namespace Player
         [SerializeField] bool isDead = false;
         [SerializeField] bool isGround = false;
         [SerializeField] bool isSliding = false;
+        [SerializeField] public bool onJumpCooldown = false;
 
         public event Action<int> onLoadNewTileset;
         public event Action<int> onDeleteOldTileset;
@@ -62,8 +63,24 @@ namespace Player
             // If press jump (then) check availability and stop sliding
             if (Input.GetKeyDown("x") && jumpCounter <= 1 && jumpCounter != -1)
             {
-                Jump();
-                isSliding = false;
+                //check if in Jump Cooldown after touching the ground
+                if (!onJumpCooldown)
+                { 
+                    int Random = UnityEngine.Random.Range(0, 2);
+
+                    Jump();
+
+                    if (Random == 0)
+                    {
+                        AudioManagerScript.instance.play("JumpSound1");
+                    }
+                    else
+                    {
+                        AudioManagerScript.instance.play("JumpSound3");
+                    }
+
+                    isSliding = false;
+                }
             }
 
             // If pressing (slide button) then slide when can
@@ -73,6 +90,10 @@ namespace Player
             } 
             else if (Input.GetKey("z"))
             {
+                if (!isSliding)
+                {
+                    AudioManagerScript.instance.play("SlideSound");
+                }
                 isSliding = true;
                 Slide();
             }
@@ -152,6 +173,7 @@ namespace Player
                     print("Hit Collectables !");
                     ScoreManagerScript.instance.displayScore(1);
                     collision.gameObject.SetActive(false);
+                    AudioManagerScript.instance.play("CollectSound");
                     break;
             }
         }
@@ -198,6 +220,20 @@ namespace Player
             Debug.DrawRay((Vector2)transform.position + new Vector2(0, 0), Vector2.down * 2.5f, raycastColor);
 
             return raycastHit.collider != null && raycastHit.collider.CompareTag("ground");
+        }
+
+
+        public void triggerJumpCooldown()
+        {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+            StartCoroutine("waitJumpCooldown");
+        }
+
+        public IEnumerator waitJumpCooldown()
+        {
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0f);
+            yield return new WaitForSeconds(0.005f);
+            onJumpCooldown = false;
         }
 
     }
